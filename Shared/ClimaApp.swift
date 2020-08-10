@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ClimaApp: App {
+    @StateObject private var model = ClimaModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(model)
         }
     }
 }
