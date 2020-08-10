@@ -87,6 +87,7 @@
 		0037944D24DE7DF4001DE759 /* SuggestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsList.swift; sourceTree = "<group>"; };
 		0037945024DE86B7001DE759 /* LocationSuggester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSuggester.swift; sourceTree = "<group>"; };
 		00494EF924D7686200C2B602 /* AddCityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityButton.swift; sourceTree = "<group>"; };
+		004EE5FC24E107C900144927 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		00927F8024C939D700137418 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		00927F8324C93BF300137418 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		00927F8624C9559700137418 /* CityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityList.swift; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 		00D0A89924C7EFEA0048EE51 = {
 			isa = PBXGroup;
 			children = (
+				004EE5FC24E107C900144927 /* README.md */,
 				00D0A89E24C7EFEA0048EE51 /* Shared */,
 				00D0A8A824C7EFEC0048EE51 /* iOS */,
 				00D0A8AF24C7EFEC0048EE51 /* macOS */,
