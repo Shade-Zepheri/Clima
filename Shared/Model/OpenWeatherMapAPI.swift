@@ -30,6 +30,9 @@ enum OpenWeatherMapAPI {
                 .eraseToAnyPublisher()
         }
         
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap { element -> Data in
                 guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -38,7 +41,7 @@ enum OpenWeatherMapAPI {
                 
                 return element.data
             }
-            .decode(type: WeatherResponse.self, decoder: JSONDecoder())
+            .decode(type: WeatherResponse.self, decoder: decoder)
             .mapError {
                 ClimaError.map($0)
             }

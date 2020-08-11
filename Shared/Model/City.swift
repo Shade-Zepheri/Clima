@@ -10,17 +10,17 @@ import CoreLocation
 
 struct City: Identifiable {
     var id = UUID()
-    var createdDate = Date()
-    var lastUpdate = Date()
+    var timestamp = Date()
+    var lastRefresh = Date()
 
-    var locality: String
-    var province: String
-    var country: String
+    let locality: String
+    let province: String
+    let country: String
 
     var weatherData: WeatherResponse
     
     func updated(with data: WeatherResponse) -> City {
-        return City(id: id, createdDate: createdDate, lastUpdate: Date(), locality: locality, province: province, country: country, weatherData: data)
+        return City(id: id, timestamp: timestamp, lastRefresh: Date(), locality: locality, province: province, country: country, weatherData: data)
     }
 }
 
@@ -39,7 +39,7 @@ extension City {
         province: "Texas",
         country: "USA",
         weatherData: WeatherResponse(lat: 29.76, lon: -95.37, timezone: "America/Chicago", timezone_offset: -18000,
-                                  current: CurrentWeatherEntry(dt: 1596513727, sunrise: 1596454946, sunset: 1596503563, temp: 302.26, feels_like: 304.67, pressure: 1015, humidity: 70, dew_point: 296.23, clouds: 40, uvi: 10.68, visibility: 10000, wind_speed: 4.1, wind_gust: nil, wind_deg: 200, rain: nil, snow: nil, weather: [WeatherGroup(id: 802, main: "Clouds", description: "scattered clouds", icon: "03n")]), hourly: [.fallback], daily: [.fallback])
+                                     current: CurrentWeatherEntry(dt: Date(timeIntervalSince1970: 1596513727), sunrise: Date(timeIntervalSince1970: 1596454946), sunset: Date(timeIntervalSince1970: 1596503563), temp: 302.26, feels_like: 304.67, pressure: 1015, humidity: 70, dew_point: 296.23, clouds: 40, uvi: 10.68, visibility: 10000, wind_speed: 4.1, wind_gust: nil, wind_deg: 200, rain: nil, snow: nil, weather: [WeatherGroup(id: 802, main: "Clouds", description: "scattered clouds", icon: "03n")]), hourly: [.fallback], daily: [.fallback])
     )
     
     static let locationDenied = City(locality: "--", province: "--", country: "--", weatherData: .denied)
@@ -161,15 +161,13 @@ extension City {
     }
     
     var sunriseTime: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(weatherData.current.sunrise))
         let formatter = DateFormatter.timeDateFormatter
-        return formatter.string(from: date)
+        return formatter.string(from: weatherData.current.sunrise)
     }
     
     var sunsetTime: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(weatherData.current.sunset))
         let formatter = DateFormatter.timeDateFormatter
-        return formatter.string(from: date)
+        return formatter.string(from: weatherData.current.sunset)
     }
     
     var precipitationPercentage: String {
@@ -179,38 +177,23 @@ extension City {
     }
 }
 
-// MARK: Codable
-
-extension City: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case createdDate
-        case lastUpdate
-        
-        case locality
-        case province
-        case country
-        case weatherData
-    }
-}
-
 // MARK: Comparable & Hashable
 
 extension City: Comparable {
     static func < (lhs: City, rhs: City) -> Bool {
-        return lhs.createdDate < rhs.createdDate
+        return lhs.timestamp < rhs.timestamp
     }
     
     static func <= (lhs: City, rhs: City) -> Bool {
-        return lhs.createdDate <= rhs.createdDate
+        return lhs.timestamp <= rhs.timestamp
     }
     
     static func > (lhs: City, rhs: City) -> Bool {
-        return lhs.createdDate > rhs.createdDate
+        return lhs.timestamp > rhs.timestamp
     }
     
     static func >= (lhs: City, rhs: City) -> Bool {
-        return lhs.createdDate >= rhs.createdDate
+        return lhs.timestamp >= rhs.timestamp
     }
     
     static func == (lhs: City, rhs: City) -> Bool {

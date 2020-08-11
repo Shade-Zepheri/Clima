@@ -25,9 +25,9 @@ struct WeatherResponse: Codable {
 }
 
 struct CurrentWeatherEntry: Codable {
-    var dt: Int
-    var sunrise: Int
-    var sunset: Int
+    var dt: Date
+    var sunrise: Date
+    var sunset: Date
     
     var temp: Double
     var feels_like: Double
@@ -47,12 +47,12 @@ struct CurrentWeatherEntry: Codable {
     var snow: PrecipitationEntry?
     var weather: [WeatherGroup]
     
-    static let fallback = CurrentWeatherEntry(dt: 0, sunrise: 0, sunset: 0, temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, rain: nil, snow: nil, weather: [.fallback])
-    static let denied = CurrentWeatherEntry(dt: 0, sunrise: 0, sunset: 0, temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, rain: nil, snow: nil, weather: [.denied])
+    static let fallback = CurrentWeatherEntry(dt: Date(), sunrise: Date(), sunset: Date(), temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, rain: nil, snow: nil, weather: [.fallback])
+    static let denied = CurrentWeatherEntry(dt: Date(), sunrise: Date(), sunset: Date(), temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, rain: nil, snow: nil, weather: [.denied])
 }
 
 struct HourlyWeatherEntry: Codable {
-    var dt: Int
+    var dt: Date
     
     var temp: Double
     var feels_like: Double
@@ -73,18 +73,17 @@ struct HourlyWeatherEntry: Codable {
     var snow: PrecipitationEntry?
     var weather: [WeatherGroup]
     
-    static let fallback = HourlyWeatherEntry(dt: 0, temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, pop: 0.96, rain: nil, snow: nil, weather: [.fallback])
+    static let fallback = HourlyWeatherEntry(dt: Date(), temp: 0, feels_like: 0, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, pop: 0.96, rain: nil, snow: nil, weather: [.fallback])
 }
 
 extension HourlyWeatherEntry: Identifiable {
     var id: Int {
-        return dt
+        return Int(dt.timeIntervalSince1970)
     }
     
     var timestamp: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(dt))
         let formatter = DateFormatter.timeDateFormatter
-        return formatter.string(from: date)
+        return formatter.string(from: dt)
     }
     
     var currentTemp: String {
@@ -98,9 +97,9 @@ extension HourlyWeatherEntry: Identifiable {
 }
 
 struct DailyWeatherEntry: Codable {
-    var dt: Int
-    var sunrise: Int
-    var sunset: Int
+    var dt: Date
+    var sunrise: Date
+    var sunset: Date
     
     var temp: DailyTemperatureEntry
     var feels_like: DailyTemperatureEntry
@@ -122,7 +121,7 @@ struct DailyWeatherEntry: Codable {
     var snow: Double?
     var weather: [WeatherGroup]
     
-    static let fallback = DailyWeatherEntry(dt: 0, sunrise: 0, sunset: 0, temp: .fallback, feels_like: .fallback, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, pop: 0.96, rain: nil, snow: nil, weather: [.fallback])
+    static let fallback = DailyWeatherEntry(dt: Date(), sunrise: Date(), sunset: Date(), temp: .fallback, feels_like: .fallback, pressure: 0, humidity: 0, dew_point: 0, clouds: 0, uvi: 0, visibility: 0, wind_speed: 0, wind_gust: nil, wind_deg: 0, pop: 0.96, rain: nil, snow: nil, weather: [.fallback])
 }
 
 struct PrecipitationEntry: Codable {
