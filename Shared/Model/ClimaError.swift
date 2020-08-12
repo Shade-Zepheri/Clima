@@ -20,3 +20,24 @@ enum ClimaError: Error {
         return (error as? ClimaError) ?? .other(error)
     }
 }
+
+extension ClimaError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .statusCode:
+            return NSLocalizedString("URL Response code was not 200.", comment: "")
+        case .decoding:
+            return NSLocalizedString("Couldn't decode JSON into model.", comment: "")
+        case .invalidURL:
+            return NSLocalizedString("Generated API URL is invalid.", comment: "")
+        case .reverseGeocoding:
+            return NSLocalizedString("Failed to reverse geocode coordinates.", comment: "")
+        case .forwardGeocoding:
+            return NSLocalizedString("Couldn't retrieve coordinates for desired location.", comment: "")
+        case .noSavedCities:
+            return NSLocalizedString("No cities stored in database.", comment: "")
+        case .other(let error):
+            return NSLocalizedString("Other error: \(error.localizedDescription)", comment: "")
+        }
+    }
+}

@@ -218,7 +218,7 @@ extension ClimaModel {
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    break
+                    print(error)
                 case .finished:
                     break
                 }
