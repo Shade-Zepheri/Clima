@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreData
 import CoreLocation
 import MapKit
 
@@ -49,23 +50,32 @@ extension ClimaModel {
         var newSavedCities = savedCities
         newSavedCities.append(city)
         savedCities = newSavedCities.sorted()
+        
+        PersistentContainer.shared.save([city])
     }
     
     func loadSavedCities() {
-//        let savedLocations = [CLLocation(latitude: 29.7604, longitude: -95.3698), CLLocation(latitude: 34.052235, longitude: -118.2437), CLLocation(latitude: 40.7128, longitude: -74.0060)]
-//        let createCityPublishers = savedLocations.map {
-//            createCity(for: $0)
-//        }
-//
-//        Publishers.MergeMany(createCityPublishers)
-//            .collect()
-//            .receive(on: DispatchQueue.main)
-//            .sink { completion in
-//                self.lastUpdate = Date()
-//            } receiveValue: { cities in
-//                self.savedCities = cities.sorted()
-//            }
-//            .store(in: &cancellables)
+        PersistentContainer.shared.loadStoredCities()
+            .map {
+                $0.map {
+                    $0.derivedCity()
+                }
+            }
+            .flatMap { cities in
+                self.updateCities(cities)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print(error)
+                case .finished:
+                    self.lastUpdate = Date()
+                }
+            } receiveValue: { cities in
+                self.savedCities = cities.sorted()
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -118,8 +128,8 @@ extension ClimaModel {
             .eraseToAnyPublisher()
     }
     
-    func updateSavedCities() -> AnyPublisher<[City], Never> {
-        let publishers = savedCities.map {
+    func updateCities(_ cities: [City]) -> AnyPublisher<[City], Never> {
+        let publishers = cities.map {
             update(city: $0)
         }
         

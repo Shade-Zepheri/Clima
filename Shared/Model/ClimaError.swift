@@ -13,6 +13,7 @@ enum ClimaError: Error {
     case invalidURL
     case reverseGeocoding
     case forwardGeocoding
+    case noSavedCities
     case other(Error)
     
     static func map(_ error: Error) -> ClimaError {
