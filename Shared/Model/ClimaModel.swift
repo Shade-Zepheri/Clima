@@ -56,7 +56,7 @@ extension ClimaModel {
     
     func delete(city: City) {
         savedCities = savedCities.filter {
-            $0.id == city.id
+            $0.id != city.id
         }
         
         PersistentContainer.shared.delete(city)
