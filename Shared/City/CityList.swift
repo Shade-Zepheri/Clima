@@ -11,7 +11,6 @@ struct CityList: View {
     var cities: [City]
     
     @State private var showingSheet = false
-    @State private var selection: City?
     @EnvironmentObject private var model: ClimaModel
     
     var columns = [
@@ -24,14 +23,9 @@ struct CityList: View {
             LazyVGrid(columns: columns) {
                 Section(header: Text("Locations")) {
                     ForEach(cities) { city in
-                        NavigationLink(
-                            destination: CityView(city: city),
-                            tag: city,
-                            selection: $selection
-                        ) {
+                        NavigationLink(destination: CityView(city: city)) {
                             CityCard(city: city)
                         }
-                        .tag(city)
                         .disabled(city.isFallback())
                     }
 
