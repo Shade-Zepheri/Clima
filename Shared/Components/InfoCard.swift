@@ -31,7 +31,6 @@ struct InfoCard: View {
                     .fontWeight(.medium)
             }
             .padding()
-                
         }
         .padding(5)
         .shadow(radius: 2)
@@ -41,6 +40,6 @@ struct InfoCard: View {
 
 struct InfoCard_Previews: PreviewProvider {
     static var previews: some View {
-        InfoCard(color: .blue, info: "10", description: "Humidity", iconName: "thermometer.sun")
+        InfoCard(color: .silver, info: "10", description: "Humidity", iconName: "thermometer.sun")
     }
 }

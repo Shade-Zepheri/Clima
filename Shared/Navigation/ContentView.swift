@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 NavigationLink(destination: CityView(city: model.currentCity)) {
-                    CityCard(city: model.currentCity, isRemovable: false)
+                    CityCard(color: .silver, city: model.currentCity, isRemovable: false)
                 }
                 .disabled(model.currentCity.isFallback())
                 .frame(maxHeight: 175)

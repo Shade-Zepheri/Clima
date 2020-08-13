@@ -7,11 +7,13 @@
 
 import Foundation
 import CoreLocation
+import SwiftUI
 
 struct City: Identifiable {
     var id = UUID()
     var timestamp = Date()
     var lastRefresh = Date()
+    var cardColor = Color.random()
 
     let locality: String
     let province: String
@@ -20,7 +22,7 @@ struct City: Identifiable {
     var weatherData: WeatherResponse
     
     func updated(with data: WeatherResponse) -> City {
-        return City(id: id, timestamp: timestamp, lastRefresh: Date(), locality: locality, province: province, country: country, weatherData: data)
+        return City(id: id, timestamp: timestamp, lastRefresh: Date(), cardColor: cardColor, locality: locality, province: province, country: country, weatherData: data)
     }
 }
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17175" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CoalescedWeatherData" representedClassName="CoalescedWeatherData" syncable="YES" codeGenerationType="category">
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConcreteCity" inverseName="weatherData" inverseEntity="ConcreteCity"/>
+        <relationship name="currentWeather" maxCount="1" deletionRule="Cascade" destinationEntity="CurrentWeatherData" inverseName="coalescedData" inverseEntity="CurrentWeatherData"/>
+        <relationship name="dailyWeather" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="DailyWeatherData" inverseName="coalescedData" inverseEntity="DailyWeatherData"/>
+        <relationship name="hourlyWeather" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="HourlyWeatherData" inverseName="coalescedData" inverseEntity="HourlyWeatherData"/>
+    </entity>
+    <entity name="ConcreteCity" representedClassName="ConcreteCity" syncable="YES" codeGenerationType="category">
+        <attribute name="cardColor" attributeType="Transformable" valueTransformerName="ConcreteColorTransformer" customClassName=".ConcreteColor"/>
+        <attribute name="country" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastRefresh" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="locality" attributeType="String"/>
+        <attribute name="province" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="weatherData" maxCount="1" deletionRule="Cascade" destinationEntity="CoalescedWeatherData" inverseName="city" inverseEntity="CoalescedWeatherData"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ConditionData" representedClassName="ConditionData" syncable="YES" codeGenerationType="category">
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="main" attributeType="String"/>
+        <attribute name="summary" attributeType="String"/>
+        <relationship name="currentData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeatherData" inverseName="weather" inverseEntity="CurrentWeatherData"/>
+        <relationship name="dailyData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeatherData" inverseName="weather" inverseEntity="DailyWeatherData"/>
+        <relationship name="hourlyData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HourlyWeatherData" inverseName="weather" inverseEntity="HourlyWeatherData"/>
+    </entity>
+    <entity name="CurrentWeatherData" representedClassName="CurrentWeatherData" syncable="YES" codeGenerationType="category">
+        <attribute name="clouds" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dewPoint" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="feelsLike" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="humidity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pressure" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sunrise" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sunset" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="temp" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uvi" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="visibility" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDeg" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windGust" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="windSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="coalescedData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoalescedWeatherData" inverseName="currentWeather" inverseEntity="CoalescedWeatherData"/>
+        <relationship name="rain" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PrecipitationData" inverseName="currentData1" inverseEntity="PrecipitationData"/>
+        <relationship name="snow" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PrecipitationData" inverseName="currentData2" inverseEntity="PrecipitationData"/>
+        <relationship name="weather" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ConditionData" inverseName="currentData" inverseEntity="ConditionData"/>
+    </entity>
+    <entity name="DailyWeatherData" representedClassName="DailyWeatherData" syncable="YES" codeGenerationType="category">
+        <attribute name="clouds" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dewPoint" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="humidity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pop" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pressure" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rain" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="snow" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="sunrise" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sunset" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uvi" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="visibility" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="windDeg" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windGust" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="windSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="coalescedData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoalescedWeatherData" inverseName="dailyWeather" inverseEntity="CoalescedWeatherData"/>
+        <relationship name="feelsLike" maxCount="1" deletionRule="Cascade" destinationEntity="TemperatureData" inverseName="dailyData2" inverseEntity="TemperatureData"/>
+        <relationship name="temp" maxCount="1" deletionRule="Cascade" destinationEntity="TemperatureData" inverseName="dailyData1" inverseEntity="TemperatureData"/>
+        <relationship name="weather" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ConditionData" inverseName="dailyData" inverseEntity="ConditionData"/>
+    </entity>
+    <entity name="HourlyWeatherData" representedClassName="HourlyWeatherData" syncable="YES" codeGenerationType="category">
+        <attribute name="clouds" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dewPoint" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="feelsLike" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="humidity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pop" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pressure" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="temp" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="visibility" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windDeg" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="windGust" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="windSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="coalescedData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoalescedWeatherData" inverseName="hourlyWeather" inverseEntity="CoalescedWeatherData"/>
+        <relationship name="rain" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PrecipitationData" inverseName="hourlyData1" inverseEntity="PrecipitationData"/>
+        <relationship name="snow" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PrecipitationData" inverseName="hourlyData2" inverseEntity="PrecipitationData"/>
+        <relationship name="weather" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ConditionData" inverseName="hourlyData" inverseEntity="ConditionData"/>
+    </entity>
+    <entity name="PrecipitationData" representedClassName="PrecipitationData" syncable="YES" codeGenerationType="category">
+        <attribute name="oneHour" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="currentData1" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeatherData" inverseName="rain" inverseEntity="CurrentWeatherData"/>
+        <relationship name="currentData2" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeatherData" inverseName="snow" inverseEntity="CurrentWeatherData"/>
+        <relationship name="hourlyData1" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HourlyWeatherData" inverseName="rain" inverseEntity="HourlyWeatherData"/>
+        <relationship name="hourlyData2" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HourlyWeatherData" inverseName="snow" inverseEntity="HourlyWeatherData"/>
+    </entity>
+    <entity name="TemperatureData" representedClassName="TemperatureData" syncable="YES" codeGenerationType="category">
+        <attribute name="day" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="evening" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="max" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="min" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="morning" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="night" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="dailyData1" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeatherData" inverseName="temp" inverseEntity="DailyWeatherData"/>
+        <relationship name="dailyData2" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeatherData" inverseName="feelsLike" inverseEntity="DailyWeatherData"/>
+    </entity>
+    <elements>
+        <element name="CoalescedWeatherData" positionX="34.703125" positionY="-292.26171875" width="128" height="133"/>
+        <element name="ConcreteCity" positionX="-136.48046875" positionY="-331.18359375" width="128" height="163"/>
+        <element name="ConditionData" positionX="684.19140625" positionY="-325.59375" width="128" height="148"/>
+        <element name="CurrentWeatherData" positionX="214.640625" positionY="-770.72265625" width="128" height="313"/>
+        <element name="DailyWeatherData" positionX="231.67578125" positionY="-421.28515625" width="128" height="328"/>
+        <element name="HourlyWeatherData" positionX="223.6328125" positionY="-81.11328125" width="128" height="283"/>
+        <element name="PrecipitationData" positionX="722.6484375" positionY="-470.984375" width="128" height="118"/>
+        <element name="TemperatureData" positionX="609.33203125" positionY="-152.82421875" width="128" height="163"/>
+    </elements>
+</model>

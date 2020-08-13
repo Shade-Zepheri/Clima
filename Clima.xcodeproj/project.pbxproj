@@ -51,6 +51,8 @@
 		004EE63424E3BAEE00144927 /* HourlyWeatherData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004EE61724E3BAED00144927 /* HourlyWeatherData+CoreDataClass.swift */; };
 		004EE63724E3BAEE00144927 /* DailyWeatherData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004EE61924E3BAED00144927 /* DailyWeatherData+CoreDataClass.swift */; };
 		004EE63824E3BAEE00144927 /* DailyWeatherData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004EE61924E3BAED00144927 /* DailyWeatherData+CoreDataClass.swift */; };
+		004EE63C24E52E2E00144927 /* ConcreteColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004EE63B24E52E2E00144927 /* ConcreteColor.swift */; };
+		004EE63D24E52E2E00144927 /* ConcreteColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004EE63B24E52E2E00144927 /* ConcreteColor.swift */; };
 		00927F8124C939D700137418 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00927F8024C939D700137418 /* Constants.swift */; };
 		00927F8224C939D700137418 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00927F8024C939D700137418 /* Constants.swift */; };
 		00927F8424C93BF300137418 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00927F8324C93BF300137418 /* WeatherResponse.swift */; };
@@ -118,6 +120,8 @@
 		004EE61524E3BAED00144927 /* CurrentWeatherData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentWeatherData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		004EE61724E3BAED00144927 /* HourlyWeatherData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HourlyWeatherData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		004EE61924E3BAED00144927 /* DailyWeatherData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeatherData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		004EE63B24E52E2E00144927 /* ConcreteColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteColor.swift; sourceTree = "<group>"; };
+		004EE63E24E530A200144927 /* Clima v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Clima v2.xcdatamodel"; sourceTree = "<group>"; };
 		00927F8024C939D700137418 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		00927F8324C93BF300137418 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		00927F8624C9559700137418 /* CityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityList.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 				004EE61924E3BAED00144927 /* DailyWeatherData+CoreDataClass.swift */,
 				004EE5FE24E130B300144927 /* Clima.xcdatamodeld */,
 				004EE60224E1342A00144927 /* PersistentContainer.swift */,
+				004EE63B24E52E2E00144927 /* ConcreteColor.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -533,6 +538,7 @@
 				00494EFA24D7686200C2B602 /* AddCityButton.swift in Sources */,
 				00D0A8DF24C7F2510048EE51 /* ClimaModel.swift in Sources */,
 				004EE63724E3BAEE00144927 /* DailyWeatherData+CoreDataClass.swift in Sources */,
+				004EE63C24E52E2E00144927 /* ConcreteColor.swift in Sources */,
 				00927F8124C939D700137418 /* Constants.swift in Sources */,
 				00D0A8C824C7EFEC0048EE51 /* ClimaApp.swift in Sources */,
 				004EE62B24E3BAEE00144927 /* ConcreteCity+CoreDataClass.swift in Sources */,
@@ -572,6 +578,7 @@
 				00494EFB24D7686200C2B602 /* AddCityButton.swift in Sources */,
 				00D0A8E024C7F2510048EE51 /* ClimaModel.swift in Sources */,
 				004EE63824E3BAEE00144927 /* DailyWeatherData+CoreDataClass.swift in Sources */,
+				004EE63D24E52E2E00144927 /* ConcreteColor.swift in Sources */,
 				00927F8224C939D700137418 /* Constants.swift in Sources */,
 				00D0A8C924C7EFEC0048EE51 /* ClimaApp.swift in Sources */,
 				004EE62C24E3BAEE00144927 /* ConcreteCity+CoreDataClass.swift in Sources */,
@@ -965,9 +972,10 @@
 		004EE5FE24E130B300144927 /* Clima.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				004EE63E24E530A200144927 /* Clima v2.xcdatamodel */,
 				004EE5FF24E130B300144927 /* Clima.xcdatamodel */,
 			);
-			currentVersion = 004EE5FF24E130B300144927 /* Clima.xcdatamodel */;
+			currentVersion = 004EE63E24E530A200144927 /* Clima v2.xcdatamodel */;
 			path = Clima.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

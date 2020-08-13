@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CityCard: View {
+    var color: Color?
     var city: City
     var isRemovable: Bool
     
@@ -17,7 +18,7 @@ struct CityCard: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 15.0, style: .continuous)
-                .foregroundColor(.red)
+                .foregroundColor(color ?? city.cardColor)
             VStack(alignment: .leading) {
                 HStack {
                     Label {
@@ -84,6 +85,6 @@ struct CityCard: View {
 
 struct CityRow_Previews: PreviewProvider {
     static var previews: some View {
-        CityCard(city: .test, isRemovable: true)
+        CityCard(color: .silver, city: .test, isRemovable: true)
     }
 }

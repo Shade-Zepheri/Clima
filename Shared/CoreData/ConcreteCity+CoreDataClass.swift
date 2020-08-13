@@ -16,6 +16,7 @@ public class ConcreteCity: NSManagedObject {
         self.id = city.id
         self.timestamp = city.timestamp
         self.lastRefresh = city.lastRefresh
+        self.cardColor = ConcreteColor(city.cardColor)
         self.locality = city.locality
         self.province = city.province
         self.country = city.country
@@ -23,6 +24,6 @@ public class ConcreteCity: NSManagedObject {
     }
     
     func derivedCity() -> City {
-        return City(id: id!, timestamp: timestamp!, lastRefresh: lastRefresh!, locality: locality!, province: province!, country: country!, weatherData: weatherData!.derivedData())
+        return City(id: id!, timestamp: timestamp!, lastRefresh: lastRefresh!, cardColor: cardColor!.derivedColor(), locality: locality!, province: province!, country: country!, weatherData: weatherData!.derivedData())
     }
 }

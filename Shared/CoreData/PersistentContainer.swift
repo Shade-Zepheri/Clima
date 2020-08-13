@@ -11,6 +11,8 @@ import CoreData
 
 class PersistentContainer: NSPersistentContainer {
     static let shared: PersistentContainer = {
+        ValueTransformer.setValueTransformer(ConcreteColorTransformer(), forName: .concreteColorTransformer)
+        
         let container = PersistentContainer(name: "Clima")
         container.loadPersistentStores { description, error in
             if let error = error {
