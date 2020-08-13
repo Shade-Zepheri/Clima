@@ -24,7 +24,7 @@ struct CityList: View {
                 Section(header: Text("Locations")) {
                     ForEach(cities) { city in
                         NavigationLink(destination: CityView(city: city)) {
-                            CityCard(city: city)
+                            CityCard(city: city, isRemovable: true)
                         }
                         .disabled(city.isFallback())
                     }

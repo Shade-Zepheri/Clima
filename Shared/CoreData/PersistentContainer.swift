@@ -39,12 +39,12 @@ class PersistentContainer: NSPersistentContainer {
 extension PersistentContainer {
     func loadStoredCities() -> AnyPublisher<[ConcreteCity], ClimaError> {
         return Future() { promise in
+            let allEntriesRequest: NSFetchRequest<ConcreteCity> = ConcreteCity.fetchRequest()
+            allEntriesRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ConcreteCity.timestamp), ascending: false)]
+            
             let context = self.newBackgroundContext()
             context.perform {
                 do {
-                    let allEntriesRequest: NSFetchRequest<ConcreteCity> = ConcreteCity.fetchRequest()
-                    allEntriesRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ConcreteCity.timestamp), ascending: false)]
-                    
                     let fetchResult = try context.fetch(allEntriesRequest)
                     guard !fetchResult.isEmpty else {
                         promise(.failure(.noSavedCities))
@@ -62,7 +62,6 @@ extension PersistentContainer {
     
     func save(_ cities: [City]) {
         let context = newBackgroundContext()
-        
         context.perform {
             do {
                 _ = cities.map {
@@ -72,6 +71,24 @@ extension PersistentContainer {
                 try context.save()
             } catch {
                 print("Error adding entries to store: \(error)")
+            }
+        }
+    }
+    
+    func delete(_ city: City) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ConcreteCity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", city.id as CVarArg)
+        fetchRequest.fetchLimit = 1
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        let context = newBackgroundContext()
+        context.perform {
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+            } catch {
+                print("Error deleting entry: \(error)")
             }
         }
     }
