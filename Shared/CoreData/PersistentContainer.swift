@@ -62,12 +62,13 @@ extension PersistentContainer {
     
     func save(_ cities: [City]) {
         let context = newBackgroundContext()
-        _ = cities.map {
-            ConcreteCity(context: context, city: $0)
-        }
         
         context.perform {
             do {
+                _ = cities.map {
+                    ConcreteCity(context: context, city: $0)
+                }
+                
                 try context.save()
             } catch {
                 print("Error adding entries to store: \(error)")

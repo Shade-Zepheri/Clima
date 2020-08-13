@@ -34,7 +34,7 @@ class ClimaModel: NSObject, ObservableObject {
 
         willEnterForeground = NotificationCenter.default.publisher(for: UIScene.willEnterForegroundNotification)
             .sink { _ in
-                print("willEnterForeground")
+                self.updateSavedCities()
             }
 
         setupLocationMonitoring()
@@ -61,19 +61,40 @@ extension ClimaModel {
                     $0.derivedCity()
                 }
             }
-            .flatMap { cities in
-                self.updateCities(cities)
-            }
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
                 case .failure(let error):
                     print(error)
                 case .finished:
-                    self.lastUpdate = Date()
+                    self.updateSavedCities()
                 }
             } receiveValue: { cities in
                 self.savedCities = cities.sorted()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func updateSavedCities() {
+        let lastRefresh = lastUpdate ?? .distantPast
+        
+        let now = Date()
+        let interval = TimeInterval(30 * 60)
+        
+        guard !savedCities.isEmpty, now > (lastRefresh + interval) else {
+            return
+        }
+        
+        resetRequests()
+        
+        updateCities(savedCities)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.lastUpdate = Date()
+            } receiveValue: { cities in
+                self.savedCities = cities.sorted()
+                
+                PersistentContainer.shared.save(cities)
             }
             .store(in: &cancellables)
     }
@@ -121,8 +142,8 @@ extension ClimaModel {
         let location = city.location
         
         return OpenWeatherMapAPI.weatherData(for: location)
-            .map { response in
-                city.updated(with: response)
+            .map {
+                city.updated(with: $0)
             }
             .replaceError(with: .fallbackCity)
             .eraseToAnyPublisher()
@@ -138,47 +159,6 @@ extension ClimaModel {
             .eraseToAnyPublisher()
     }
 }
-
-// MARK: Backgrounding
-
-//extension ClimaModel {
-//    func registerBackgroundTasks() {
-//        didEnterBackground = NotificationCenter.default.publisher(for: UIScene.didEnterBackgroundNotification)
-//            .sink { _ in
-//                self.scheduleAppRefresh()
-//            }
-//    }
-//
-//    func scheduleAppRefresh() {
-//        let request = BGAppRefreshTaskRequest(identifier: "com.shade.clima.refresh")
-//        request.earliestBeginDate = Date(timeIntervalSinceNow: 30 * 60)
-//
-//        do {
-//            try BGTaskScheduler.shared.submit(request)
-//        } catch {
-//            print("Couldn't schedule app refresh: \(error)")
-//        }
-//    }
-//
-//    func handleAppRefresh(task: BGAppRefreshTask) {
-//        scheduleAppRefresh()
-//
-//        resetRequests()
-//
-//        let updateToken = updateSavedCities()
-//            .receive(on: DispatchQueue.main)
-//            .sink { completion in
-//                self.lastUpdate = Date()
-//                task.setTaskCompleted(success: true)
-//            } receiveValue: { cities in
-//                self.savedCities = cities.sorted()
-//            }
-//
-//        task.expirationHandler = {
-//            updateToken.cancel()
-//        }
-//    }
-//}
 
 // MARK: Location
 
