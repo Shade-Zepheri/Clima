@@ -32,6 +32,7 @@ struct CityList: View {
                     AddCityButton(showSheet: $showingSheet)
                 }
             }
+            .padding(7)
         }
         .navigationTitle("Weather")
         .toolbar {

@@ -56,7 +56,7 @@ struct CityCard: View {
         }
         .padding(5)
         .shadow(radius: 2.0)
-        .aspectRatio(1.4, contentMode: .fit)
+        .aspectRatio(1.45, contentMode: .fit)
         .contextMenu {
             if isRemovable {
                 Button(action: {

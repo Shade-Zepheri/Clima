@@ -30,10 +30,10 @@ struct AddCityButton: View {
                 }
                 .padding()
             }
-            .aspectRatio(1.45, contentMode: .fit)
-            .padding(5)
             .foregroundColor(.accentColor)
-            .shadow(radius: 3.0)
+            .padding(5)
+            .shadow(radius: 2.0)
+            .aspectRatio(1.45, contentMode: .fit)
         })
     }
 }
