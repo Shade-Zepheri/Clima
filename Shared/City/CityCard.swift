@@ -79,7 +79,7 @@ struct CityCard: View {
     }
     
     func delete() {
-        model.delete(city: city)
+        model.delete(city)
     }
 }
 

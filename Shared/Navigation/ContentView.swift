@@ -22,7 +22,7 @@ struct ContentView: View {
                 
                 Divider()
                 
-                CityList(cities: model.savedCities)
+                CityList()
             }
             
             Text("Select a City")

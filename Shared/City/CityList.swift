@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CityList: View {
-    var cities: [City]
-    
     @State private var showingSheet = false
     @EnvironmentObject private var model: ClimaModel
     
@@ -22,7 +20,7 @@ struct CityList: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 Section(header: Text("Locations")) {
-                    ForEach(cities) { city in
+                    ForEach(model.savedCities) { city in
                         NavigationLink(destination: CityView(city: city)) {
                             CityCard(city: city, isRemovable: true)
                         }
@@ -55,7 +53,7 @@ struct CityList_Previews: PreviewProvider {
     static var previews: some View {
         ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
             NavigationView {
-                CityList(cities: [.fallbackCity, .test])
+                CityList()
                     .environmentObject(ClimaModel())
             }
             .preferredColorScheme(scheme)

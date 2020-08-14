@@ -12,8 +12,8 @@ import CoreLocation
 import MapKit
 
 class ClimaModel: NSObject, ObservableObject {
-    @Published var currentCity = City.fallbackCity
-    @Published var savedCities = [City]()
+    @Published private(set) var currentCity = City.fallbackCity
+    @Published private(set) var savedCities = [City]()
     
     var lastUpdate: Date? {
         get {
@@ -45,7 +45,7 @@ class ClimaModel: NSObject, ObservableObject {
 // MARK: City Management
 
 extension ClimaModel {
-    func save(city: City) {
+    func save(_ city: City) {
         // Append to property
         var newSavedCities = savedCities
         newSavedCities.append(city)
@@ -54,7 +54,7 @@ extension ClimaModel {
         PersistentContainer.shared.save([city])
     }
     
-    func delete(city: City) {
+    func delete(_ city: City) {
         savedCities = savedCities.filter {
             $0.id != city.id
         }
@@ -95,13 +95,13 @@ extension ClimaModel {
         
         resetRequests()
         
-        updateCities(savedCities)
+        update(cities: savedCities)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 self.lastUpdate = Date()
             } receiveValue: { cities in
                 self.savedCities = cities.sorted()
-                
+
                 PersistentContainer.shared.save(cities)
             }
             .store(in: &cancellables)
@@ -157,7 +157,7 @@ extension ClimaModel {
             .eraseToAnyPublisher()
     }
     
-    func updateCities(_ cities: [City]) -> AnyPublisher<[City], Never> {
+    func update(cities: [City]) -> AnyPublisher<[City], Never> {
         let publishers = cities.map {
             update(city: $0)
         }
@@ -211,7 +211,7 @@ extension ClimaModel {
                     break
                 }
             } receiveValue: { city in
-                self.save(city: city)
+                self.save(city)
             }
             .store(in: &cancellables)
     }
