@@ -1,8 +1,8 @@
 //
-//  CityRow.swift
-//  Clima
+//  CityCard.swift
+//  Clima macOS
 //
-//  Created by Alfonso Gonzalez on 7/22/20.
+//  Created by Alfonso Gonzalez on 8/14/20.
 //
 
 import SwiftUI
@@ -37,8 +37,8 @@ struct CityCard: View {
                         }, label: {
                             Image(systemName: "ellipsis.circle.fill")
                                 .font(.title)
-                                .foregroundColor(.black)
-                                .opacity(0.23)
+                                .foregroundColor(.white)
+                                .opacity(0.2)
                         })
                     }
                 }
@@ -68,13 +68,21 @@ struct CityCard: View {
                 })
             }
         }
-        .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("This city will be deleted from all of your iCloud devices."), buttons: [
-                .destructive(Text("Delete City")) {
-                    delete()
-                },
-                .cancel()
-            ])
+        .sheet(isPresented: $showingActionSheet) {
+            VStack {
+                Text("This city will be deleted from all of your iCloud devices.")
+                    .font(.subheadline)
+                
+                HStack {
+                    Button("Cancel") {
+                        self.showingActionSheet = false
+                    }
+                    
+                    Spacer()
+                    
+                    Button("Delete", action: delete)
+                }
+            }
         }
     }
     
@@ -83,8 +91,10 @@ struct CityCard: View {
     }
 }
 
-struct CityRow_Previews: PreviewProvider {
+struct CityCard_Previews: PreviewProvider {
     static var previews: some View {
-        CityCard(color: .silver, city: .test, isRemovable: true)
+        CityCard(color: .actualPink, city: .test, isRemovable: true)
+            .preferredColorScheme(.dark)
     }
 }
+

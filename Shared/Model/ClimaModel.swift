@@ -5,11 +5,13 @@
 //  Created by Alfonso Gonzalez on 7/21/20.
 //
 
-import UIKit
 import Combine
 import CoreData
 import CoreLocation
 import MapKit
+#if os(iOS)
+import UIKit
+#endif
 
 class ClimaModel: NSObject, ObservableObject {
     @Published private(set) var currentCity = City.fallbackCity
@@ -24,18 +26,22 @@ class ClimaModel: NSObject, ObservableObject {
         }
     }
 
-    private var willEnterForeground: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
+    #if os(iOS)
+    private var willEnterForeground: AnyCancellable?
+    #endif
     
     private let locationManager = CLLocationManager()
     
     override init() {
         super.init()
 
+        #if os(iOS)
         willEnterForeground = NotificationCenter.default.publisher(for: UIScene.willEnterForegroundNotification)
             .sink { _ in
                 self.updateSavedCities()
             }
+        #endif
 
         setupLocationMonitoring()
         loadSavedCities()
@@ -219,10 +225,16 @@ extension ClimaModel {
 
 extension ClimaModel: CLLocationManagerDelegate {
     func setupLocationMonitoring() {
+        #if os(iOS)
         locationManager.requestWhenInUseAuthorization()
+        #else
+        locationManager.requestAlwaysAuthorization()
+        #endif
         
         locationManager.delegate = self
+        #if os(iOS)
         locationManager.allowsBackgroundLocationUpdates = true
+        #endif
         
         startLocationMonitoring()
     }

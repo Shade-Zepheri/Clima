@@ -1,8 +1,8 @@
 //
 //  AddCitySheet.swift
-//  Clima
+//  Clima iOS
 //
-//  Created by Alfonso Gonzalez on 8/7/20.
+//  Created by Alfonso Gonzalez on 8/14/20.
 //
 
 import SwiftUI

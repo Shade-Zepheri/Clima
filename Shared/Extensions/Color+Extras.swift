@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-#if canImport(UIKit)
-    import UIKit
-    typealias NativeColor = UIColor
-#elseif canImport(AppKit)
-    import AppKit
-    typealias NativeColor = NSColor
+#if os(iOS)
+import UIKit
+#else
+import AppKit
 #endif
 
 extension Color {
@@ -21,10 +19,14 @@ extension Color {
         var g: CGFloat = 0
         var b: CGFloat = 0
         var o: CGFloat = 0
-
-        guard NativeColor(self).getRed(&r, green: &g, blue: &b, alpha: &o) else {
+        
+        #if os(iOS)
+        guard UIColor(self).getRed(&r, green: &g, blue: &b, alpha: &o) else {
             return (0, 0, 0, 0)
         }
+        #else
+        NSColor(self).getRed(&r, green: &g, blue: &b, alpha: &o)
+        #endif
 
         return (r, g, b, o)
     }
