@@ -35,7 +35,7 @@ extension City {
         weatherData = data
     }
     
-    static let fallbackCity = City(locality: "--", province: "--", country: "--", weatherData: .fallback)
+    static let fallback = City(locality: "--", province: "--", country: "--", weatherData: .fallback)
     static let test = City(
         locality: "Houston",
         province: "Texas",

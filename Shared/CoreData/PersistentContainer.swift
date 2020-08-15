@@ -94,4 +94,19 @@ extension PersistentContainer {
             }
         }
     }
+    
+    func deleteAll() {
+        let allEntriesRequest: NSFetchRequest<NSFetchRequestResult> = ConcreteCity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: allEntriesRequest)
+        
+        let context = newBackgroundContext()
+        context.perform {
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+            } catch {
+                print("Error deleting all entries: \(error)")
+            }
+        }
+    }
 }

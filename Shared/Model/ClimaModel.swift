@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 class ClimaModel: NSObject, ObservableObject {
-    @Published private(set) var currentCity = City.fallbackCity
+    @Published private(set) var currentCity = City.fallback
     @Published private(set) var savedCities = [City]()
     
     var lastUpdate: Date? {
@@ -100,6 +100,7 @@ extension ClimaModel {
         }
         
         resetRequests()
+        PersistentContainer.shared.deleteAll()
         
         update(cities: savedCities)
             .receive(on: DispatchQueue.main)
@@ -145,10 +146,10 @@ extension ClimaModel {
         let placemarkPublisher = placemark(for: location)
         
         return placemarkPublisher.zip(weatherDataPubliser)
-            .map { (placemark, data) in
+            .map { placemark, data in
                 City(placemark: placemark, data: data)
             }
-            .replaceError(with: .fallbackCity)
+            .replaceError(with: .fallback)
             .eraseToAnyPublisher()
     }
     
@@ -159,7 +160,7 @@ extension ClimaModel {
             .map {
                 city.updated(with: $0)
             }
-            .replaceError(with: .fallbackCity)
+            .replaceError(with: .fallback)
             .eraseToAnyPublisher()
     }
     

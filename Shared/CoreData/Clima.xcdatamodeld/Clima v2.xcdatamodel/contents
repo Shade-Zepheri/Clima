@@ -17,11 +17,6 @@
         <attribute name="province" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="weatherData" maxCount="1" deletionRule="Cascade" destinationEntity="CoalescedWeatherData" inverseName="city" inverseEntity="CoalescedWeatherData"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="id"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="ConditionData" representedClassName="ConditionData" syncable="YES" codeGenerationType="category">
         <attribute name="icon" attributeType="String"/>
