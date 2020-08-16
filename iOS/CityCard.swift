@@ -8,17 +8,25 @@
 import SwiftUI
 
 struct CityCard: View {
-    var color: Color?
     var city: City
     var isRemovable: Bool
+    var usesAutomaticColors: Bool
     
     @State private var showingActionSheet = false
     @EnvironmentObject private var model: ClimaModel
     
+    var cardColor: Color {
+        if !usesAutomaticColors {
+            return city.cardColor
+        }
+        
+        return .color(for: city.weatherCode)
+    }
+    
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 15.0, style: .continuous)
-                .foregroundColor(color ?? city.cardColor)
+                .foregroundColor(cardColor)
             VStack(alignment: .leading) {
                 HStack {
                     Label {
@@ -85,7 +93,7 @@ struct CityCard: View {
 
 struct CityCard_Previews: PreviewProvider {
     static var previews: some View {
-        CityCard(color: .actualPink, city: .test, isRemovable: true)
+        CityCard(city: .test, isRemovable: true, usesAutomaticColors: true)
             .preferredColorScheme(.dark)
     }
 }

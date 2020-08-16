@@ -30,6 +30,31 @@ extension Color {
 
         return (r, g, b, o)
     }
+    
+    static func color(for code: String) -> Color {
+        switch code {
+        case "01d", "02d":
+            return .orange
+        case "01n", "02n":
+            return .black
+        case "03d", "03n", "04d", "04n":
+            return .gray
+        case "09d", "09n":
+            return .blue
+        case "10d":
+            return .blue
+        case "10n":
+            return .indigo
+        case "11d", "11n":
+            return .amber
+        case "13d", "13n":
+            return .arcticBlue
+        case "50d", "50n":
+            return .silver
+        default:
+            return .gray
+        }
+    }
 }
 
 
@@ -64,6 +89,7 @@ extension Color {
     static let springGreen = Color(red: 0, green: 0.9, blue: 0.6)
     static let lightGreen = Color(red: 0.49, green: 0.70, blue: 0.26)
     static let teal = Color(red: 0.15, green: 0.65, blue: 0.60)
+    static let arcticBlue = Color(red: 0.00, green: 0.79, blue: 0.91)
     static let indigo = Color(red: 0.36, green: 0.42, blue: 0.75)
     static let actualPink = Color(red: 0.92, green: 0.50, blue: 0.99)
     static let watermelon = Color(red: 1.00, green: 0.53, blue: 0.61)

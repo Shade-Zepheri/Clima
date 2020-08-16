@@ -22,7 +22,7 @@ struct CityList: View {
                 Section(header: Text("Locations")) {
                     ForEach(model.savedCities) { city in
                         NavigationLink(destination: CityView(city: city)) {
-                            CityCard(city: city, isRemovable: true)
+                            CityCard(city: city, isRemovable: true, usesAutomaticColors: false)
                         }
                         .disabled(city.isFallback())
                     }
