@@ -254,7 +254,7 @@ extension ClimaModel: CLLocationManagerDelegate {
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus() {
+        switch manager.authorizationStatus {
         case .restricted, .denied:
             stopLocationMonitoring()
         case .authorizedWhenInUse, .authorizedAlways:
