@@ -18,17 +18,17 @@ extension Color {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
-        var o: CGFloat = 0
+        var a: CGFloat = 0
         
         #if os(iOS)
-        guard UIColor(self).getRed(&r, green: &g, blue: &b, alpha: &o) else {
+        guard UIColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
             return (0, 0, 0, 0)
         }
         #else
-        NSColor(self).getRed(&r, green: &g, blue: &b, alpha: &o)
+        NSColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
         #endif
 
-        return (r, g, b, o)
+        return (r, g, b, a)
     }
     
     static func color(for code: String) -> Color {
@@ -36,7 +36,7 @@ extension Color {
         case "01d", "02d":
             return .orange
         case "01n", "02n":
-            return .black
+            return .darkGray
         case "03d", "03n", "04d", "04n":
             return .gray
         case "09d", "09n":
@@ -95,4 +95,5 @@ extension Color {
     static let watermelon = Color(red: 1.00, green: 0.53, blue: 0.61)
     static let resedaGreen = Color(red: 0.63, green: 0.70, blue: 0.64)
     static let lightBrown = Color(red: 0.63, green: 0.53, blue: 0.50)
+    static let darkGray = Color(red: 0.26, green: 0.26, blue: 0.26)
 }

@@ -16,11 +16,7 @@ struct CityCard: View {
     @EnvironmentObject private var model: ClimaModel
     
     var cardColor: Color {
-        if !usesAutomaticColors {
-            return city.cardColor
-        }
-        
-        return .color(for: city.weatherCode)
+        return usesAutomaticColors ? .color(for: city.weatherCode) : city.cardColor
     }
     
     var body: some View {
