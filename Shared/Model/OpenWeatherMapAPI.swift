@@ -10,15 +10,15 @@ import CoreLocation
 
 enum OpenWeatherMapAPI {
     static func request(for location: CLLocation) -> URL? {
+        // Query my proxy to keep API Key hidden
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.openweathermap.org"
-        components.path = "/data/2.5/onecall"
+        components.host = "clima.alfonsogonzalez.me"
+        components.path = "/api"
         components.queryItems = [
             URLQueryItem(name: "lat", value: String(location.coordinate.latitude)),
             URLQueryItem(name: "lon", value: String(location.coordinate.longitude)),
-            URLQueryItem(name: "exclude", value: "minutely"),
-            URLQueryItem(name: "appid", value: OpenWeatherMapKey)
+            URLQueryItem(name: "exclude", value: "minutely")
         ]
         
         return components.url
